@@ -1,12 +1,12 @@
 import express from 'express';
 import { OrderController } from './controllers/OrderController';
 
-const app = express();
-app.use(express.json());
+// O app recebe o controller pronto: não cria nenhuma dependência concreta.
+export function createApp(orderController: OrderController) {
+  const app = express();
+  app.use(express.json());
 
-const orderController = new OrderController();
+  app.post('/orders', orderController.processOrder);
 
-// Rota única que faz tudo
-app.post('/orders', orderController.processOrder);
-
-export default app;
+  return app;
+}
