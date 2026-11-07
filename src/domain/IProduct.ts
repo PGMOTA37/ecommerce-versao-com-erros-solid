@@ -6,8 +6,6 @@ export interface ProductData {
   price: number;
 }
 
-// Contrato do produto. Quem usa um Product não sabe (nem precisa saber) se ele é físico ou digital.
-// LSP: qualquer subtipo cumpre a promessa de calculateFreight() sem lançar erro e sem exigir mais.
 export interface Product {
   readonly id: number;
   readonly name: string;

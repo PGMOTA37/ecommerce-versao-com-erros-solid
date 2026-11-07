@@ -6,7 +6,6 @@ export interface OrderItem {
   quantity: number;
 }
 
-// Pedido ainda não gravado (sem id).
 export interface NewOrder {
   customer: string;
   items: OrderItem[];

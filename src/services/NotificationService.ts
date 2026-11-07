@@ -1,10 +1,12 @@
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../container/types';
 import { Order } from '../domain/Order';
 import { IMailProvider } from '../providers/IMailProvider';
 import logger from '../lib/logger';
 
-// Define O QUE enviar (assunto e corpo). COMO enviar é do IMailProvider.
+@injectable()
 export class NotificationService {
-  constructor(private mailProvider: IMailProvider) {}
+  constructor(@inject(TYPES.MailProvider) private mailProvider: IMailProvider) {}
 
   async sendOrderConfirmation(order: Order): Promise<string | undefined> {
     const total = order.total.toFixed(2);

@@ -1,11 +1,13 @@
 import express from 'express';
-import { OrderController } from './controllers/OrderController';
+import { container } from './container/container';
+import { TYPES } from './container/types';
+import type { OrderController } from './controllers/OrderController';
 
-// O app recebe o controller pronto: não cria nenhuma dependência concreta.
-export function createApp(orderController: OrderController) {
+export function createApp() {
   const app = express();
   app.use(express.json());
 
+  const orderController = container.get<OrderController>(TYPES.OrderController);
   app.post('/orders', orderController.processOrder);
 
   return app;

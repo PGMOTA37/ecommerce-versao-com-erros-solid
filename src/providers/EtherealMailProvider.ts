@@ -1,8 +1,9 @@
+import { injectable } from 'inversify';
 import nodemailer from 'nodemailer';
 import { getMailClient } from '../lib/mail';
 import { IMailProvider, MailMessage, MailResult } from './IMailProvider';
 
-// Único lugar das regras de negócio que conhece o nodemailer.
+@injectable()
 export class EtherealMailProvider implements IMailProvider {
   async sendMail(message: MailMessage): Promise<MailResult> {
     const mailer = await getMailClient();

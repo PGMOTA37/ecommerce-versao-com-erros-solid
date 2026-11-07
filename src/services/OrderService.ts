@@ -1,8 +1,10 @@
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../container/types';
 import { Order, OrderItem } from '../domain/Order';
 import { ProductFactory } from '../domain/ProductFactory';
 import { AppError } from '../errors/AppError';
 import logger from '../lib/logger';
-import { IPaymentMethod } from '../payments/IPaymentMethod';
+import { PaymentMethodRegistry } from '../payments/PaymentMethodRegistry';
 import { IOrderRepository } from '../repositories/IOrderRepository';
 import { IProductRepository } from '../repositories/IProductRepository';
 import { NotificationService } from './NotificationService';
@@ -19,14 +21,14 @@ export interface CreateOrderResult {
   emailPreview?: string;
 }
 
-// Orquestra o fluxo: valida -> calcula -> paga -> salva -> notifica.
-// Só depende de abstrações; quem entrega os objetos concretos é o server.ts (DIP).
+
+@injectable()
 export class OrderService {
   constructor(
-    private productRepository: IProductRepository,
-    private orderRepository: IOrderRepository,
-    private paymentMethods: Map<string, IPaymentMethod>,
-    private notificationService: NotificationService
+    @inject(TYPES.ProductRepository) private productRepository: IProductRepository,
+    @inject(TYPES.OrderRepository) private orderRepository: IOrderRepository,
+    @inject(TYPES.PaymentMethodRegistry) private paymentMethods: PaymentMethodRegistry,
+    @inject(TYPES.NotificationService) private notificationService: NotificationService
   ) {}
 
   async processOrder(input: CreateOrderInput): Promise<CreateOrderResult> {
