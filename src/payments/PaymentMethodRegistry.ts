@@ -2,6 +2,7 @@ import { injectable, multiInject } from 'inversify';
 import { TYPES } from '../container/types';
 import { IPaymentMethod } from './IPaymentMethod';
 
+
 @injectable()
 export class PaymentMethodRegistry {
   private methods = new Map<string, IPaymentMethod>();

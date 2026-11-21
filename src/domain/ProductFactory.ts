@@ -4,6 +4,7 @@ import { DigitalProduct } from './DigitalProduct';
 
 type ProductBuilder = (data: ProductData) => Product;
 
+
 const builders = new Map<string, ProductBuilder>([
   ['physical', (d) => new PhysicalProduct(d.id, d.name, d.price)],
   ['digital', (d) => new DigitalProduct(d.id, d.name, d.price)],

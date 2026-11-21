@@ -9,6 +9,7 @@ export class DigitalProduct implements Product {
     readonly price: number
   ) {}
 
+
   calculateFreight(): number {
     return 0;
   }

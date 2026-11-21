@@ -6,6 +6,7 @@ export interface OrderItem {
   quantity: number;
 }
 
+
 export interface NewOrder {
   customer: string;
   items: OrderItem[];

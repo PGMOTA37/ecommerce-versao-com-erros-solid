@@ -1,4 +1,5 @@
-
+// Um Symbol para cada dependência. A interface some ao compilar,
+// então o container precisa de um identificador que exista em tempo de execução.
 export const TYPES = {
   ProductRepository: Symbol.for('ProductRepository'),
   OrderRepository: Symbol.for('OrderRepository'),

@@ -4,6 +4,7 @@ import { Order } from '../domain/Order';
 import { IMailProvider } from '../providers/IMailProvider';
 import logger from '../lib/logger';
 
+
 @injectable()
 export class NotificationService {
   constructor(@inject(TYPES.MailProvider) private mailProvider: IMailProvider) {}

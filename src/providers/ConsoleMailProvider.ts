@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { IMailProvider, MailMessage, MailResult } from './IMailProvider';
 
+// Modo test: imprime o e-mail no console. Não usa rede nem internet.
 @injectable()
 export class ConsoleMailProvider implements IMailProvider {
   async sendMail(message: MailMessage): Promise<MailResult> {

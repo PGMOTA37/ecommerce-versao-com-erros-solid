@@ -16,6 +16,9 @@ export interface CreateOrderInput {
   paymentDetails?: Record<string, any>;
 }
 
+
+const MAX_ORDER_ID = 2147483647;
+
 export interface CreateOrderResult {
   orderId: number;
   emailPreview?: string;
@@ -56,6 +59,18 @@ export class OrderService {
     return { orderId: order.id, emailPreview };
   }
 
+  async getOrderById(id: number): Promise<Order> {
+    if (!Number.isInteger(id)) {
+      throw new AppError('Id de pedido inválido', 400);
+    }
+
+    const order = id > MAX_ORDER_ID ? null : await this.orderRepository.findById(id);
+    if (!order) {
+      throw new AppError(`Pedido ${id} não encontrado`, 404);
+    }
+    return order;
+  }
+
   private validate(customer: string, items: CreateOrderInput['items']): void {
     if (!items || items.length === 0) {
       logger.error('Tentativa de pedido sem itens');
@@ -81,7 +96,7 @@ export class OrderService {
         throw new AppError(`Produto ${item.productId} não encontrado`, 400);
       }
 
-      // Polimorfismo no lugar do if (product.type === ...): cada produto sabe seu frete.
+
       const product = ProductFactory.createProduct(data);
       total += product.price * item.quantity + product.calculateFreight();
 
